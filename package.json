@@ -27,7 +27,7 @@
     "@types/node": "^14.11.1"
   },
   "bugs": {
-    "url": "https://github.com/anderjason/-filesystem/issues"
+    "url": "https://github.com/anderjason/node-filesystem/issues"
   },
-  "homepage": "https://github.com/anderjason/-filesystem#readme"
+  "homepage": "https://github.com/anderjason/node-filesystem#readme"
 }
