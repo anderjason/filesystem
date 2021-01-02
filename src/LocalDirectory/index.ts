@@ -145,7 +145,6 @@ export class LocalDirectory {
           return;
         }
 
-        // directory does not exist
         const parentDirectory = this.toOptionalParentDirectory();
         if (parentDirectory != null) {
           await parentDirectory.createDirectory();
