@@ -88,24 +88,26 @@ class LocalDirectory {
     createDirectory() {
         return new Promise((resolve, reject) => {
             fs.access(this.toAbsolutePath(), async (err) => {
-                if (err) {
-                    // directory does not exist
-                    const parentDirectory = this.toOptionalParentDirectory();
-                    if (parentDirectory != null) {
-                        await parentDirectory.createDirectory();
-                    }
-                    fs.mkdir(this.toAbsolutePath(), undefined, (mkdirErr) => {
-                        if (mkdirErr) {
-                            reject(mkdirErr);
-                            return;
-                        }
-                        resolve();
-                    });
-                }
-                else {
-                    // directory already exists
+                if (err == null) {
                     resolve();
+                    return;
                 }
+                if (err.code !== "ENOENT") {
+                    reject(err);
+                    return;
+                }
+                // directory does not exist
+                const parentDirectory = this.toOptionalParentDirectory();
+                if (parentDirectory != null) {
+                    await parentDirectory.createDirectory();
+                }
+                fs.mkdir(this.toAbsolutePath(), undefined, (mkdirErr) => {
+                    if (mkdirErr != null && mkdirErr.code !== "EEXIST") {
+                        reject(mkdirErr);
+                        return;
+                    }
+                    resolve();
+                });
             });
         });
     }
