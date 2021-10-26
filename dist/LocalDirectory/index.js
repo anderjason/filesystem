@@ -96,7 +96,6 @@ class LocalDirectory {
                     reject(err);
                     return;
                 }
-                // directory does not exist
                 const parentDirectory = this.toOptionalParentDirectory();
                 if (parentDirectory != null) {
                     await parentDirectory.createDirectory();
